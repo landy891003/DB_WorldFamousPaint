@@ -2,7 +2,7 @@
 
 
 網站: https://landy891003.github.io/DB_WorldFamousPaint/  
-目前網站裡有2400幅畫作
+目前網站裡有2400幅作品
 
 網頁架構: HTML/JS/JQuery  
 爬蟲使用BeautifulSoup  
