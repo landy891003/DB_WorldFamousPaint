@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- bootstrap css -->
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <!-- style css -->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <!-- Responsive-->
+      <link rel="stylesheet" href="css/responsive.css">
+      <!-- fevicon -->
+      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <!-- Tweaks for older IEs-->
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <!-- owl stylesheets --> 
+      <link rel="stylesheet" href="css/owl.carousel.min.css">
+      <link rel="stylesoeet" href="css/owl.theme.default.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+   </head>
+   <body>
+      <!-- header section start -->
+      <div class="header_section">
+         <div class="">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+               <a class="logo" href="index.html"></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                  </ul>
+                  <div class="search_icon"><a href="index.html">Back To Search<img src="images/search-icon.png"></a></div>
+               </div>
+            </nav>
+         </div>
+      </div>
+      <!-- project section start -->
+      <div class="project_section_2 layout_padding">
+            <div class="container-fluid">
+               <div class="row" style="display: flex;  justify-content: center; align-items: center;font-size:23px;">
+                  <div class="col-sm-5" id="Paint"></div>
+                  <div class="col-sm-5" id="Word"></div>
+               </div>
+              <div class='project_menu' style=" display: flex;  justify-content: center; align-items: center;">
+                  <li class="active"><a onclick="BackPage()">返回</a></li>
+              </div>
+            </div>
+            
+         </div>
+      </div>
+      <div class="copyright_section">
+         <div class="container">
+            <p class="copyright_text">長庚資工資料庫設計 名畫資料庫</p>
+         </div>
+      </div>
+      <!-- copyright section end -->    
+      <!-- Javascript files-->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+      <!-- javascript --> 
+      <script src="js/owl.carousel.js"></script>
+      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+      <script>
+     const firebaseConfig = {
+    apiKey: "AIzaSyC-qCdMtnhauLVZSFnanEwg_A6aoFnAz44",
+    authDomain: "painting-database.firebaseapp.com",
+    databaseURL: "https://painting-database-default-rtdb.firebaseio.com",
+    projectId: "painting-database",
+    storageBucket: "painting-database.appspot.com",
+    messagingSenderId: "269078974709",
+    appId: "1:269078974709:web:580da754219d5bff20b5bc"
+  };
+    // Initialize Firebase
+    var id = location.href.split('=',2)
+    firebase.initializeApp(firebaseConfig);
+    var starCountRef = firebase.database().ref('Artwork');
+    var Paint = document.getElementById('Paint')
+    var Word = document.getElementById('Word')
+    
+    function BackPage(){
+          window.location.href ='index.html'
+   }
+
+    starCountRef.once('value', function(snapshot) {
+      snapshot.forEach(childSnapShot=>{
+         var data = childSnapShot.val()
+         if(childSnapShot.key == id[1]){
+            document.title = data.Title
+            var img = new Image()
+            var title = new Text()
+            var artist = new Text()
+            var Date = new Text()
+            var Place = new Text()
+            var Dimensions = new Text()
+            var Category = new Text()
+
+            img.src=data.Image
+            img.width="300" 
+            img.height="500"
+            img.classList.add("container")
+            Paint.appendChild(img);
+
+            title.textContent = 'Title: '+ data.Title
+            Word.appendChild(title);
+            
+            Word.appendChild(document.createElement('br'))
+            artist.textContent = 'Artist: '+data.Artist
+            Word.appendChild(artist);
+
+            Word.appendChild(document.createElement('br'))
+            Date.textContent = 'Date: '+data.Date
+            Word.appendChild(Date)
+
+            Word.appendChild(document.createElement('br'))
+            Place.textContent = 'Place: '+data.Place
+            Word.appendChild(Place)
+
+            Word.appendChild(document.createElement('br'))
+            Dimensions.textContent = 'Place: '+data.Dimensions
+            Word.appendChild(Dimensions)
+
+            Word.appendChild(document.createElement('br'))
+            Category.textContent = 'Category: '+data.Category
+            Word.appendChild(Category)
+            }
+         }
+      )}
+   )
+   </script>
+</body>
+</html>
